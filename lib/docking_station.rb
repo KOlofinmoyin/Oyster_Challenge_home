@@ -14,6 +14,7 @@ class DockingStation
   end
 
   def dock(bike)
+    raise "Cannot dock bike: Docking station full." if is_full?
     @bike = bike
     @bikes << @bike
   end
@@ -21,5 +22,9 @@ class DockingStation
   private
   def is_empty?
     @bikes.empty?
+  end
+
+  def is_full?
+    @bikes.length >= DOCK_STATION_CAPACITY
   end
 end

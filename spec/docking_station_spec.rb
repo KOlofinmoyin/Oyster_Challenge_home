@@ -22,14 +22,20 @@ describe DockingStation do
 
   end
 
-# As a member of the public,
-# So that I am not confused and charged unnecessarily,
-# I'd like docking stations not to release bikes when there are none available.
-
 context "No bikes available." do
   it "raises an error" do
     expect { stratford_docking_station.release_bike }.to raise_error 'Cannot release bikes: No bikes available.'
   end
 end
 
+# As a maintainer of the system,
+# So that I can control the distribution of bikes,
+# I'd like docking stations not to accept more bikes than their capacity.
+
+context "Docking Station full" do
+  it "raises an error" do
+    20.times { stratford_docking_station.dock(bike) }
+    expect { stratford_docking_station.dock(bike) }.to raise_error "Cannot dock bike: Docking station full."
+  end
+end
 end
