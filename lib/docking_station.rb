@@ -4,20 +4,29 @@ class DockingStation
   DOCK_STATION_CAPACITY = 20
   attr_reader :bikes, :bike, :capacity
 
-  def initialize(capacity = DOCK_STATION_CAPACITY)
+  def initialize(capacity = DOCK_STATION_CAPACITY, bike = Bike.new )
     @bikes = []
     @capacity = capacity
+    @bike = bike
   end
 
   def release_bike
     raise 'Cannot release bikes: No bikes available.' if is_empty?
-    Bike.new
+    released_bike = @bikes.pop
+
+    raise 'Cannot release bikes: Bike broken.' if released_bike.broken?
+
+    released_bike
   end
 
   def dock(bike)
     raise "Cannot dock bike: Docking station full." if is_full?
     @bike = bike
     @bikes << @bike
+  end
+
+  def is_broken?
+    @bike.report_broken?
   end
 
   private
