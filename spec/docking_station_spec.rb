@@ -46,5 +46,12 @@ context "bike broken" do
     stratford_docking_station.dock(broken_bike)
     expect{ stratford_docking_station.release_bike }.to raise_error 'Cannot release bikes: Bike broken.'
   end
+
+  it "accept returning bikes (broken or not)" do
+    allow(bike).to receive(:report_broken?).and_return(true)
+    broken_bike = bike
+    broken_bike.report_broken?
+    expect(stratford_docking_station.dock(broken_bike)).to match_array [broken_bike]
+  end
 end
 end
