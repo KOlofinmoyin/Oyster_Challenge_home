@@ -1,7 +1,7 @@
 class Bike
   attr_reader :working, :report_broken
 
-  def initialize(working=true)
+  def initialize(working=false)
     @working = working
   end
 
